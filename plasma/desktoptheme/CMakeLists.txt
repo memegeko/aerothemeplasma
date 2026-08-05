@@ -5,12 +5,21 @@ install(
     DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plasma/desktoptheme
 )
 
-# Plasma selects a compositing-specific dialog surface when blur or contrast
-# is active.  Install the same light Aero frame for every variant so context
-# menus never fall back to Breeze's dark translucent asset.
-foreach(dialog_variant opaque solid translucent)
+# Plasma Components 3 menus use widgets/background, while shell dialogs use
+# dialogs/background. Install the same light Aero frame for both paths and for
+# every compositing variant so neither can fall back to Seven-Black or Breeze.
+install(
+    FILES ${CMAKE_SOURCE_DIR}/plasma/desktoptheme/Aero7/dialogs/background.svg
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plasma/desktoptheme/Aero7/widgets
+)
+
+foreach(surface_variant opaque solid translucent)
     install(
         FILES ${CMAKE_SOURCE_DIR}/plasma/desktoptheme/Aero7/dialogs/background.svg
-        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plasma/desktoptheme/Aero7/${dialog_variant}/dialogs
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plasma/desktoptheme/Aero7/${surface_variant}/dialogs
+    )
+    install(
+        FILES ${CMAKE_SOURCE_DIR}/plasma/desktoptheme/Aero7/dialogs/background.svg
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/share/plasma/desktoptheme/Aero7/${surface_variant}/widgets
     )
 endforeach()
