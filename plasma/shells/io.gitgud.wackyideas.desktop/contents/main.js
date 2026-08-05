@@ -1,6 +1,4 @@
 
-loadTemplate("io.gitgud.wackyideas.taskbar")
-
 var desktopsArray = desktopsForActivity(currentActivity());
 for( var j = 0; j < desktopsArray.length; j++) {
     desktopsArray[j].wallpaperPlugin = 'org.kde.image';
@@ -9,3 +7,8 @@ for( var j = 0; j < desktopsArray.length; j++) {
     desktopsArray[j].writeConfig("PreviewImage", "file:///usr/share/wallpapers/Aero7ShellDefault/contents/images/1672x941.png");
     //var clock = desktopsArray[j].addWidget("org.kde.plasma.analogclock");
 }
+
+// Set the branded wallpaper before the panel template is loaded.  Creating
+// the taskbar first lets Plasma render one frame with its stock wallpaper on a
+// new profile, which is visible between the Welcome screen and the desktop.
+loadTemplate("io.gitgud.wackyideas.taskbar")
