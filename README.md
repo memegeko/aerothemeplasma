@@ -1,5 +1,22 @@
 # AeroThemePlasma
 
+## Aero7 downstream fork
+
+This branch is maintained for the independent Aero7 project. It follows the
+upstream Plasma 6.7 branch while replacing Microsoft and Windows product-logo
+branding used at runtime with project-owner-supplied Aero7 artwork. Upstream
+screenshots and non-logo theme resources are deliberately unchanged for now so
+their provenance and any remaining release work stay visible.
+
+Aero7 is an independent project and is not affiliated with, authorized,
+sponsored, endorsed, or approved by Microsoft Corporation. Windows and other
+Microsoft product names are trademarks of the Microsoft group of companies.
+Microsoft trademarks are used only for truthful, descriptive references to the
+upstream project's design target. No Microsoft sponsorship or compatibility
+certification is claimed.
+
+See `THIRD_PARTY.md` for the downstream asset and licence record.
+
 ## HIATUS NOTICE: This is a long overdue announcement, but development will slow down significantly as a result of real life priorities I have to take care of first. Estimated time until I continue development is unknown, but don't expect anything significant in the following few months, until August, probably. Thank you for your patience and support.
 
 ## Microsoft® Windows™ is a registered trademark of Microsoft® Corporation. This name is used for referential use only, and does not aim to usurp copyrights from Microsoft. Microsoft Ⓒ 2025 All rights reserved. All resources belong to Microsoft Corporation.
