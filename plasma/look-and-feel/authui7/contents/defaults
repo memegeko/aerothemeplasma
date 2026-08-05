@@ -13,6 +13,9 @@ LayoutName=thumbnail_aero
 [plasmarc][Theme]
 name=Aero7
 
+[Wallpaper]
+Image=Aero7ShellDefault
+
 [kcminputrc][Mouse]
 cursorTheme=aero-drop
 

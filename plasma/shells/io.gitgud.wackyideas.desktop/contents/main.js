@@ -1,5 +1,9 @@
 
-var desktopsArray = desktopsForActivity(currentActivity());
+// During a brand-new login currentActivity() is not guaranteed to be ready
+// when the shell layout script runs.  Querying only that activity can return
+// an empty list and leaves Plasma's stock wallpaper visible.  desktops()
+// covers every containment that already exists during shell startup.
+var desktopsArray = desktops();
 for( var j = 0; j < desktopsArray.length; j++) {
     desktopsArray[j].wallpaperPlugin = 'org.kde.image';
     desktopsArray[j].currentConfigGroup = ["Wallpaper", "org.kde.image", "General"];
