@@ -18,7 +18,8 @@
     </linearGradient>
   </defs>
 
-  <rect id="hint-tile-center" x="1" y="1" width="2" height="2" fill="#ff6600"/>
+  <!-- Keep the center stretchable. Tiling this vertical gradient restarts it
+       every 16 px and creates visible horizontal bands in Plasma popups. -->
   <rect id="hint-stretch-borders" x="4" y="1" width="2" height="2" fill="#ff6600"/>
   <rect id="hint-top-margin" x="8" y="1" width="1" height="7" fill="#ff6600"/>
   <rect id="hint-bottom-margin" x="10" y="1" width="1" height="7" fill="#ff6600"/>
