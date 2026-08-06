@@ -80,7 +80,7 @@ PlasmaCore.Dialog {
 	property color searchFieldTextColor: "black"
 	property color searchFieldPlaceholderColor: "#707070"
 
-	property color shutdownTextColor: "#202020"
+	property color shutdownTextColor: "#ffffff"
 
 	// A bunch of references for easier access by child QML elements
 	property alias m_mainPanel: leftSidebar
@@ -1215,13 +1215,13 @@ PlasmaCore.Dialog {
 					text: i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Shut down")
 
 					font.pixelSize: 12
-					color: searching ? shutdownTextColor : Kirigami.Theme.textColor
+					color: shutdownTextColor
 					anchors.horizontalCenter: parent.horizontalCenter
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.verticalCenterOffset: -1
 
 					style: Text.Outline
-					styleColor: "transparent"
+					styleColor: "#80000000"
 					z: 5
 				}
 

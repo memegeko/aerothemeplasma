@@ -538,7 +538,7 @@ Item {
                 width: 1
                 visible: main.showDate && main.oneLineMode
 
-                color: Kirigami.Theme.textColor
+                color: "#ffffff"
                 opacity: 0.4
             }
 
@@ -554,12 +554,13 @@ Item {
                     hintingPreference: Font.PreferFullHinting
                 }
                 minimumPixelSize: 1
+                color: "#ffffff"
                 style: {
                     if(Screen.devicePixelRatio == 1.0) return Text.Outline;
                     if(Screen.devicePixelRatio >= 2.0) return Text.Normal;
                     return Text.Raised;
                 }
-                styleColor: "transparent"
+                styleColor: "#80000000"
                 //text:
                 leftPadding: ((showDate && dateFormat === Qt.ISODate) ? 1 : 0)
                 verticalAlignment: Text.AlignVCenter
@@ -575,8 +576,9 @@ Item {
                 font.pixelSize: timeLabel.font.pixelSize
                 font.hintingPreference: Font.PreferFullHinting
                 minimumPixelSize: 1
+                color: "#ffffff"
 
-                styleColor: "transparent"
+                styleColor: "#80000000"
                 style: {
                     if(Screen.devicePixelRatio == 1.0) return Text.Outline;
                     if(Screen.devicePixelRatio >= 2.0) return Text.Normal;
@@ -599,12 +601,13 @@ Item {
             font.pixelSize: timeLabel.font.pixelSize
             font.hintingPreference: Font.PreferFullHinting
             minimumPixelSize: 1
+            color: "#ffffff"
             style: {
                 if(Screen.devicePixelRatio == 1.0) return Text.Outline;
                 if(Screen.devicePixelRatio >= 2.0) return Text.Normal;
                 return Text.Raised;
             }
-            styleColor: "transparent"
+            styleColor: "#80000000"
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
         }
