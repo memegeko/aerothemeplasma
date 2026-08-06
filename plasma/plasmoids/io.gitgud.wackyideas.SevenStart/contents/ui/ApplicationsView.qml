@@ -36,6 +36,24 @@ Item {
     property alias currentIndex: applicationsView.currentIndex
     property alias count: applicationsView.count
 
+    KItemModels.KSortFilterProxyModel {
+        id: allApplicationsModel
+
+        sourceModel: rootModel.modelForRow(0)
+        sortRoleName: "display"
+        sortOrder: Qt.AscendingOrder
+        sortColumn: 0
+        filterRowCallback: function(sourceRow, sourceParent) {
+            if (!sourceModel) {
+                return false;
+            }
+            const sourceIndex = sourceModel.index(sourceRow, 0, sourceParent);
+            const displayName = sourceModel.data(sourceIndex, Qt.DisplayRole);
+            return !kicker.isExactSearchOnlyApplication(displayName)
+                && !kicker.isFullyHiddenApplication(displayName);
+        }
+    }
+
     function deactivateCurrentIndex() {
         return false;
     }
@@ -114,7 +132,7 @@ Item {
 
         focus: true
         appView: true
-        model: rootModel
+        model: allApplicationsModel
 
         function clearBreadcrumbs() {
             applicationsView.listView.currentIndex = -1;

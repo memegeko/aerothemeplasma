@@ -42,6 +42,57 @@ PlasmoidItem {
     property QtObject systemFavorites: rootModel.systemFavoritesModel
     property bool compositingEnabled: KWindowSystem.isPlatformX11 ? KX11Extras.compositingActive : true
 
+    // Keep development and service helpers out of the browsable Windows-style
+    // program list. They remain available when their complete display name is
+    // entered in search so administrators can still reach them deliberately.
+    readonly property var exactSearchOnlyApplicationNames: [
+        "Avahi SSH Server Browser",
+        "Avahi VNC Server Browser",
+        "Avahi Zeroconf Browser",
+        "Hardware Locality lstopo",
+        "Qt Assistant",
+        "Qt D-Bus Viewer",
+        "Qt Linguist",
+        "Qt V4L2 test Utility",
+        "Qt V4L2 video capture utility",
+        "Qt Widgets Designer"
+    ]
+    readonly property var fullyHiddenApplicationNames: [
+        "Emoji Selector"
+    ]
+
+    function normalizedApplicationName(value) {
+        return String(value || "").trim().toLocaleLowerCase();
+    }
+
+    function nameIsInList(name, values) {
+        const normalizedName = normalizedApplicationName(name);
+        for (let i = 0; i < values.length; ++i) {
+            if (normalizedApplicationName(values[i]) === normalizedName) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function isExactSearchOnlyApplication(name) {
+        return nameIsInList(name, exactSearchOnlyApplicationNames);
+    }
+
+    function isFullyHiddenApplication(name) {
+        return nameIsInList(name, fullyHiddenApplicationNames);
+    }
+
+    function shouldShowApplicationInSearch(name, query) {
+        if (isFullyHiddenApplication(name)) {
+            return false;
+        }
+        if (!isExactSearchOnlyApplication(name)) {
+            return true;
+        }
+        return normalizedApplicationName(name) === normalizedApplicationName(query);
+    }
+
     Plasmoid.constraintHints: Plasmoid.CanFillArea
     activationTogglesExpanded: false
 
@@ -99,7 +150,7 @@ PlasmoidItem {
 
         appNameFormat: Plasmoid.configuration.appNameFormat
         flat: true
-        sorted: false
+        sorted: true
         showSeparators: false
         appletInterface: kicker
 
@@ -107,7 +158,7 @@ PlasmoidItem {
         pageSize: Plasmoid.configuration.numberColumns *  Plasmoid.configuration.numberRows
 
         showTopLevelItems: true
-        showAllApps: false
+        showAllApps: true
         showAllAppsCategorized: false
         showRecentApps: false
         showRecentDocs: false

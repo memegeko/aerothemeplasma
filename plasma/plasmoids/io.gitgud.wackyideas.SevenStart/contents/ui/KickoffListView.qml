@@ -252,7 +252,11 @@ FocusScope {
                 }
             }
 
-            //section.property: "group"
+            section {
+                criteria: ViewSection.FirstCharacter
+                property: view.appView ? "group" : ""
+                delegate: SectionDelegate {}
+            }
         }
     }
 }

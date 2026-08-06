@@ -24,6 +24,7 @@ import org.kde.plasma.components 3.0 as PlasmaComponents
 import org.kde.plasma.plasmoid 2.0
 
 import org.kde.plasma.private.kicker as Kicker
+import org.kde.kitemmodels as KItemModels
 
 import org.kde.kirigami as Kirigami
 
@@ -33,6 +34,27 @@ Item {
     property Item itemGrid: runnerGrid
     property bool queryFinished: false
     property int repeaterModelIndex: 0
+    property var unfilteredRunnerModel: null
+
+    KItemModels.KSortFilterProxyModel {
+        id: filteredRunnerModel
+
+        sourceModel: searchViewContainer.unfilteredRunnerModel
+        filterRowCallback: function(sourceRow, sourceParent) {
+            if (!sourceModel) {
+                return false;
+            }
+            const sourceIndex = sourceModel.index(sourceRow, 0, sourceParent);
+            const displayName = sourceModel.data(sourceIndex, Qt.DisplayRole);
+            return kicker.shouldShowApplicationInSearch(displayName, searchField.text);
+        }
+    }
+
+    function refreshResultsModel() {
+        unfilteredRunnerModel = runnerModel.count ? runnerModel.modelForRow(0) : null;
+        filteredRunnerModel.invalidateFilter();
+        runnerGrid.model = unfilteredRunnerModel ? filteredRunnerModel : null;
+    }
 
     function inhibitMouse() {
         runnerGrid.inhibitMouseEvents = 2;
@@ -61,9 +83,10 @@ Item {
     function onQueryChanged() {
         queryFinished = false;
         runnerModel.query = searchField.text;
+        filteredRunnerModel.invalidateFilter();
         if (!searchField.text) {
-            if (runnerModel.model)
-                runnerModel.model = null;
+            unfilteredRunnerModel = null;
+            runnerGrid.model = null;
         }
     }
     function openContextMenu() {
@@ -75,13 +98,12 @@ Item {
     Connections {
         function onCountChanged() {
             if (runnerModel.count && !runnerGrid.model) {
-                runnerGrid.model = runnerModel.modelForRow(0);
+                refreshResultsModel();
             }
         }
         function onQueryFinished() {
             if (runnerModel.count) {
-                runnerGrid.model = null;
-                runnerGrid.model = runnerModel.modelForRow(0);
+                refreshResultsModel();
                 queryFinished = true;
                 var listView = runnerGrid.flickableItem;
                 if(listView.count > 0) listView.currentIndex = 0;
@@ -96,7 +118,7 @@ Item {
         id: runnerGrid
         anchors.fill: parent
         property alias model: runnerGrid.triggerModel
-        triggerModel: kicker.runnerModel.count ? kicker.runnerModel.modelForRow(0) : null
+        triggerModel: null
         MouseArea {
             id: mouseInhibitor
             anchors.fill: parent
