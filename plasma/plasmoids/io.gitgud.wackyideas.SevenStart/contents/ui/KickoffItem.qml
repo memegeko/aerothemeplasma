@@ -102,7 +102,7 @@ Item {
     onActionTriggered: (actionId, actionArgument) => {
         kicker.expanded = false;
 
-        if (Tools.triggerAction(listItem.listView.model, model.index, actionId, actionArgument) === true) {
+        if (Tools.triggerAction(listItem.listView.model, index, actionId, actionArgument) === true) {
             kicker.expanded = false;
         }
     }
@@ -114,7 +114,7 @@ Item {
             childModel = view.model.modelForRow(index);
             listItem.expanded = !listItem.expanded;
         } else {
-            view.model.trigger(model.index, "", null);
+            view.model.trigger(index, "", null);
             listItem.reset();
             //kicker.compactRepresentation.showMenu();
             Plasmoid.expanded = false;

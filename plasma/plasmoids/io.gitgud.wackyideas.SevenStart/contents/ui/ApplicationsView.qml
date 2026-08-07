@@ -47,6 +47,19 @@ Item {
         sortRoleName: "display"
         sortOrder: Qt.AscendingOrder
         sortColumn: 0
+        readonly property var favoritesModel: sourceModel ? sourceModel.favoritesModel : null
+
+        function trigger(proxyRow, actionId, actionArgument) {
+            if (!sourceModel) {
+                return false;
+            }
+            const sourceIndex = mapToSource(index(proxyRow, 0));
+            if (sourceIndex.row < 0) {
+                return false;
+            }
+            return sourceModel.trigger(sourceIndex.row, actionId || "", actionArgument ?? null);
+        }
+
         filterRowCallback: function(sourceRow, sourceParent) {
             if (!sourceModel) {
                 return false;
