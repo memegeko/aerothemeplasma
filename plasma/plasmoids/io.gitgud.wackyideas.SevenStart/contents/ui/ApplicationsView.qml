@@ -39,7 +39,11 @@ Item {
     KItemModels.KSortFilterProxyModel {
         id: allApplicationsModel
 
-        sourceModel: rootModel.modelForRow(0)
+        // RootModel populates asynchronously. Depending on count makes this
+        // binding run again after the "All Applications" row is available;
+        // calling modelForRow(0) before that returned null permanently and
+        // left the All Programs pane empty.
+        sourceModel: rootModel.count > 0 ? rootModel.modelForRow(0) : null
         sortRoleName: "display"
         sortOrder: Qt.AscendingOrder
         sortColumn: 0
